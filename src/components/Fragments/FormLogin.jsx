@@ -2,6 +2,8 @@ import Button from '../Elements/Button/Button';
 import InputForm from '../Elements/Input/Index';
 import Label from '../Elements/Input/Label';
 import Input from '../Elements/Input/Input';
+import { Link } from 'react-router-dom';
+
 const FormLogin = () => {
 	return (
 		<>
@@ -34,9 +36,9 @@ const FormLogin = () => {
 						/>
 						<span className='text-gray-600'>Remember me</span>
 					</Label>
-					<a href='#' className='text-blue-500 hover:underline'>
+					<Link to='/forgot-password' className='text-blue-500 hover:underline'>
 						Forgot password?
-					</a>
+					</Link>
 				</div>
 				<Button
 					type='submit'
