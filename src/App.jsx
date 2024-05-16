@@ -10,9 +10,9 @@ function App() {
 
 	return (
 		<>
-			<div className='flex justify-center'>
-				<RegisterPage />
-			</div>
+			{/* <div className='flex justify-center'> */}
+			<LoginPage />
+			{/* </div> */}
 		</>
 	);
 }
