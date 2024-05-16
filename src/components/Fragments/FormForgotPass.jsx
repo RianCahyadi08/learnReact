@@ -6,7 +6,16 @@ const FormForgotPass = () => {
 	return (
 		<>
 			<form action='#' method='POST'>
-				<InputForm
+            <InputForm
+					htmlFor='email'
+					name='email'
+					id='email'
+					type='email'
+					className='w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:border-blue-400'
+					placeholder='example@gmail.com'>
+					Email
+				</InputForm>
+				{/* <InputForm
 					htmlFor='password'
 					name='password'
 					id='password'
@@ -23,11 +32,11 @@ const FormForgotPass = () => {
 					className='w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:border-blue-400'
 					placeholder='**********'>
 					Confirm Password
-				</InputForm>
+				</InputForm> */}
 				<Button
 					type='submit'
 					classNameName='w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300'
-					name='Reset'
+					name='Send'
 				/>
 			</form>
 		</>
