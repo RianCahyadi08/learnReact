@@ -1,12 +1,12 @@
-import RegisterLayout from '../components/Layouts/RegisterLayouts';
 import FormRegister from '../components/Fragments/FormRegister';
+import AuthLayout from '../components/Layouts/AuthLayouts';
 
 const RegisterPage = () => {
 	return (
 		<>
-			<RegisterLayout title='Register'>
+			<AuthLayout title='Register' type='register'>
 				<FormRegister />
-			</RegisterLayout>
+			</AuthLayout>
 		</>
 	);
 };
