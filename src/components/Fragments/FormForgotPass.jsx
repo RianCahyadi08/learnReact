@@ -2,10 +2,15 @@ import Button from '../Elements/Button/Button';
 import InputForm from '../Elements/Input/Index';
 import Label from '../Elements/Input/Label';
 import Input from '../Elements/Input/Input';
+
+const handleClickForgotPassword = () => {
+	console.log('forgot password');
+}
+
 const FormForgotPass = () => {
 	return (
 		<>
-			<form action='#' method='POST'>
+			<form action='' method='POST'>
             <InputForm
 					htmlFor='email'
 					name='email'
@@ -34,9 +39,10 @@ const FormForgotPass = () => {
 					Confirm Password
 				</InputForm> */}
 				<Button
-					type='submit'
-					classNameName='w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300'
+					type='button'
+					className='w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300'
 					name='Send'
+					onClick={handleClickForgotPassword}
 				/>
 			</form>
 		</>

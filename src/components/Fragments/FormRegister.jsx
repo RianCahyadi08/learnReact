@@ -1,9 +1,14 @@
 import Button from '../Elements/Button/Button';
 import InputForm from '../Elements/Input/Index';
+
+const handleClickRegister = () => {
+	console.log('Register')
+}
+
 const FormRegister = () => {
 	return (
 		<>
-			<form action='#' method='POST'>
+			<form action='' method='POST'>
 				<InputForm
 					htmlFor='username'
 					name='username'
@@ -41,9 +46,10 @@ const FormRegister = () => {
 					Confirm Password
 				</InputForm>
 				<Button
-					type='submit'
-					classNameName='w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300'
+					type='button'
+					className='w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300'
 					name='Sign Up'
+					onClick={handleClickRegister}
 				/>
 			</form>
 		</>

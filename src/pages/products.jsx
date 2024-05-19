@@ -1,4 +1,5 @@
 import CardProducts from "../components/Fragments/CardProducts";
+import Button from "../components/Elements/Button/Button";
 
 const products = [
   {
@@ -19,11 +20,23 @@ const products = [
   },
 ];
 
+const email = localStorage.getItem('email');
+
+const handleLogout = () => {
+  localStorage.removeItem('email');
+  localStorage.removeItem('password');
+  window.location.href = "/";
+}
+
 const ProductPage = (props) => {
   return (
     <>
+      <div className="flex justify-end p-4 bg-blue-500 text-white">
+        <b className="mr-4">{email}</b>
+        <Button type='button' onClick={handleLogout} className='text-white' name='Logout' />
+      </div>
       {products.map((product) => (
-        <CardProducts>
+        <CardProducts key={product.id}>
           <CardProducts.HeaderImage imageProduct={product.image} />
           <CardProducts.Content
             nameProduct={product.name}
