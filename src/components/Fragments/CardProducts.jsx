@@ -1,6 +1,7 @@
 import Button from "../Elements/Button/Button";
 import { useState } from "react";
 import Rupiah from "../Elements/Formats/Rupiah";
+import Dollar from "../Elements/Formats/Dollar";
 
 const handleAddToCart = () => {
   // const [carts, setCarts] = useState([{
@@ -41,13 +42,14 @@ const Content = (props) => {
     <>
       <div className="md:w-1/2 md:pl-10 mt-6 md:mt-0">
         <h1 className="text-3xl font-bold text-gray-900">
-          {props.nameProduct}
+          {props.nameProduct.substring(0, 25)}
         </h1>
-        <p className="mt-4 text-gray-700">{props.descriptionProduct}</p>
+        <p className="mt-4 text-gray-700">{props.descriptionProduct.substring(0, 150)}</p>
 
         <div className="mt-4">
           <span className="text-xl font-semibold text-gray-900">
-            <Rupiah number={props.priceProduct}/>
+            {/* <Rupiah number={props.priceProduct}/> */}
+            <Dollar number={props.priceProduct} />
           </span>
         </div>
 

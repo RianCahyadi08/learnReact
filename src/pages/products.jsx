@@ -3,33 +3,8 @@ import Button from "../components/Elements/Button/Button";
 import Counter from "../components/Fragments/CounterCart";
 import { useState, useEffect } from "react";
 import Rupiah from "../components/Elements/Formats/Rupiah";
-
-const products = [
-  {
-    id: 1,
-    name: "Ice Cream",
-    image: "images/ice-cream.jpg",
-    price: "20000",
-    description:
-      "This is a brief description of the product. It highlights the key features and benefits to entice the customer to make a purchase",
-  },
-  {
-    id: 2,
-    name: "Nuggets",
-    image: "images/nuggets.jpg",
-    price: "30000",
-    description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos ea, placeat reiciendis vitae quasi amet. Voluptatem beatae quae expedita qui doloribus, sint minus architecto delectus aperiam magni numquam alias mollitia.",
-  },
-  {
-    id: 3,
-    name: "Tomato",
-    image: "images/tomato.jpg",
-    price: "10000",
-    description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos ea, placeat reiciendis vitae quasi amet. Voluptatem beatae quae expedita qui doloribus, sint minus architecto delectus aperiam magni numquam alias mollitia.",
-  },
-];
+import { getProducts } from "../services/product.service";
+import Dollar from "../components/Elements/Formats/Dollar";
 
 const email = localStorage.getItem("email");
 
@@ -53,12 +28,14 @@ const ProductPage = (props) => {
 
   const [totalPrice, setTotalPrice] = useState(0);
 
+  const [products, setProducts] = useState([]);
+
   useEffect(() => {
     setCarts(JSON.parse(localStorage.getItem("carts")) || []);
   }, []);
 
   useEffect(() => {
-    if (carts.length > 0) {
+    if (products.length > 0 && carts.length > 0) {
       const sum = carts.reduce((acc, item) => {
         const product = products.find((product) => product.id == item.id);
         return acc + product.price * item.qty;
@@ -66,7 +43,13 @@ const ProductPage = (props) => {
       setTotalPrice(sum);
       localStorage.setItem("carts", JSON.stringify(carts));
     }
-  }, [carts]);
+  }, [carts, products]);
+
+  useEffect(() => {
+    getProducts((data) => {
+      setProducts(data);
+    });
+  }, [])
 
   const handleAddToCart = (id) => {
     if (carts.find((cart) => cart.id === id)) {
@@ -101,11 +84,11 @@ const ProductPage = (props) => {
       </div>
       <div className="flex flex-row">
         <div className="basis-1/2">
-          {products.map((product) => (
+          {products.length > 0 && products.map((product) => (
             <CardProducts key={product.id}>
               <CardProducts.HeaderImage imageProduct={product.image} />
               <CardProducts.Content
-                nameProduct={product.name}
+                nameProduct={product.title}
                 descriptionProduct={product.description}
                 priceProduct={product.price}
                 nameButton="Add to Cart"
@@ -133,27 +116,29 @@ const ProductPage = (props) => {
           <table className="table-auto text-left border-separate">
             <thead>
               <tr>
-                <th>Product</th>
+                <th>Title</th>
                 <th>Price</th>
                 <th>Qty</th>
                 <th>Total</th>
               </tr>
             </thead>
             <tbody>
-              {carts.map((cart, index) => {
+              {products.length > 0 && carts.map((cart, index) => {
                 const product = products.find(
                   (product) => product.id === cart.id
                 );
                 return (
                   <>
                     <tr>
-                      <td>{product.name}</td>
+                      <td>{product.title.substring(0,20)}</td>
                       <td>
-                        <Rupiah number={product.price} />
+                        {/* <Rupiah number={product.price} /> */}
+                        <Dollar number={product.price} />
                       </td>
                       <td>{cart.qty}</td>
                       <td>
-                        <Rupiah number={cart.qty * product.price}></Rupiah>
+                        {/* <Rupiah number={cart.qty * product.price}></Rupiah> */}
+                        <Dollar number={product.price} />
                       </td>
                     </tr>
                   </>
@@ -166,7 +151,8 @@ const ProductPage = (props) => {
                 </td>
                 <td>
                   <b>
-                    <Rupiah number={totalPrice}></Rupiah>
+                    {/* <Rupiah number={totalPrice}></Rupiah> */}
+                    <Dollar number={totalPrice} />
                   </b>
                 </td>
               </tr>
