@@ -5,12 +5,12 @@ import { useState, useEffect } from "react";
 import Rupiah from "../components/Elements/Formats/Rupiah";
 import { getProducts } from "../services/product.service";
 import Dollar from "../components/Elements/Formats/Dollar";
+import { getUsername } from "../services/auth.service";
 
-const email = localStorage.getItem("email");
+// const email = localStorage.getItem("email");
 
 const handleLogout = () => {
-  localStorage.removeItem("email");
-  localStorage.removeItem("password");
+  localStorage.removeItem("token");
   window.location.href = "/";
 };
 
@@ -27,11 +27,19 @@ const ProductPage = (props) => {
   };
 
   const [totalPrice, setTotalPrice] = useState(0);
-
   const [products, setProducts] = useState([]);
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     setCarts(JSON.parse(localStorage.getItem("carts")) || []);
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.href = "/";
+    }
+    setUsername(getUsername(token));
   }, []);
 
   useEffect(() => {
@@ -49,7 +57,7 @@ const ProductPage = (props) => {
     getProducts((data) => {
       setProducts(data);
     });
-  }, [])
+  }, []);
 
   const handleAddToCart = (id) => {
     if (carts.find((cart) => cart.id === id)) {
@@ -72,7 +80,7 @@ const ProductPage = (props) => {
   return (
     <>
       <div className="flex justify-end p-4 bg-blue-500 text-white">
-        <b className="mr-4">{email}</b>
+        <b className="mr-4">{username}</b>
         {/* <span className="px-4">11</span> */}
         {/* <Counter /> */}
         <Button
@@ -84,19 +92,20 @@ const ProductPage = (props) => {
       </div>
       <div className="flex flex-row">
         <div className="basis-1/2">
-          {products.length > 0 && products.map((product) => (
-            <CardProducts key={product.id}>
-              <CardProducts.HeaderImage imageProduct={product.image} />
-              <CardProducts.Content
-                nameProduct={product.title}
-                descriptionProduct={product.description}
-                priceProduct={product.price}
-                nameButton="Add to Cart"
-                onClick={handleAddToCart}
-                id={product.id}
-              />
-            </CardProducts>
-          ))}
+          {products.length > 0 &&
+            products.map((product) => (
+              <CardProducts key={product.id}>
+                <CardProducts.HeaderImage imageProduct={product.image} />
+                <CardProducts.Content
+                  nameProduct={product.title}
+                  descriptionProduct={product.description}
+                  priceProduct={product.price}
+                  nameButton="Add to Cart"
+                  onClick={handleAddToCart}
+                  id={product.id}
+                />
+              </CardProducts>
+            ))}
         </div>
         <div className="basis-1/2">
           <div className="title-cart mt-5 font-semibold text-3xl text-blue-500">
@@ -123,27 +132,28 @@ const ProductPage = (props) => {
               </tr>
             </thead>
             <tbody>
-              {products.length > 0 && carts.map((cart, index) => {
-                const product = products.find(
-                  (product) => product.id === cart.id
-                );
-                return (
-                  <>
-                    <tr>
-                      <td>{product.title.substring(0,20)}</td>
-                      <td>
-                        {/* <Rupiah number={product.price} /> */}
-                        <Dollar number={product.price} />
-                      </td>
-                      <td>{cart.qty}</td>
-                      <td>
-                        {/* <Rupiah number={cart.qty * product.price}></Rupiah> */}
-                        <Dollar number={product.price} />
-                      </td>
-                    </tr>
-                  </>
-                );
-              })}
+              {products.length > 0 &&
+                carts.map((cart, index) => {
+                  const product = products.find(
+                    (product) => product.id === cart.id
+                  );
+                  return (
+                    <>
+                      <tr>
+                        <td>{product.title.substring(0, 20)}</td>
+                        <td>
+                          {/* <Rupiah number={product.price} /> */}
+                          <Dollar number={product.price} />
+                        </td>
+                        <td>{cart.qty}</td>
+                        <td>
+                          {/* <Rupiah number={cart.qty * product.price}></Rupiah> */}
+                          <Dollar number={product.price} />
+                        </td>
+                      </tr>
+                    </>
+                  );
+                })}
 
               <tr>
                 <td colSpan={3}>
