@@ -2,6 +2,7 @@ import Button from "../Elements/Button/Button";
 import { useState } from "react";
 import Rupiah from "../Elements/Formats/Rupiah";
 import Dollar from "../Elements/Formats/Dollar";
+import { Link } from "react-router-dom";
 
 const handleAddToCart = () => {
   // const [carts, setCarts] = useState([{
@@ -23,7 +24,7 @@ const CardProducts = (props) => {
   );
 };
 
-const HeaderImage = (props) => {
+const HeaderImage = (props, id) => {
   return (
     <>
       <div className="md:w-1/2">
@@ -41,9 +42,11 @@ const Content = (props) => {
   return (
     <>
       <div className="md:w-1/2 md:pl-10 mt-6 md:mt-0">
-        <h1 className="text-3xl font-bold text-gray-900">
-          {props.nameProduct.substring(0, 25)}
-        </h1>
+        <Link to={`/product/${props.id}`}>
+          <h1 className="text-3xl font-bold text-gray-900">
+            {props.nameProduct.substring(0, 25)}
+          </h1>
+        </Link>
         <p className="mt-4 text-gray-700">{props.descriptionProduct.substring(0, 150)}</p>
 
         <div className="mt-4">

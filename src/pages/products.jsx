@@ -6,6 +6,7 @@ import Rupiah from "../components/Elements/Formats/Rupiah";
 import { getProducts } from "../services/product.service";
 import Dollar from "../components/Elements/Formats/Dollar";
 import { getUsername } from "../services/auth.service";
+import { useLogin } from "../hooks/useLogin";
 
 // const email = localStorage.getItem("email");
 
@@ -28,19 +29,19 @@ const ProductPage = (props) => {
 
   const [totalPrice, setTotalPrice] = useState(0);
   const [products, setProducts] = useState([]);
-  const [username, setUsername] = useState("");
+  const username = useLogin();
 
   useEffect(() => {
     setCarts(JSON.parse(localStorage.getItem("carts")) || []);
   }, []);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      window.location.href = "/";
-    }
-    setUsername(getUsername(token));
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (!token) {
+  //     window.location.href = "/";
+  //   }
+  //   setUsername(getUsername(token));
+  // }, []);
 
   useEffect(() => {
     if (products.length > 0 && carts.length > 0) {
@@ -80,6 +81,7 @@ const ProductPage = (props) => {
   return (
     <>
       <div className="flex justify-end p-4 bg-blue-500 text-white">
+        
         <b className="mr-4">{username}</b>
         {/* <span className="px-4">11</span> */}
         {/* <Counter /> */}
