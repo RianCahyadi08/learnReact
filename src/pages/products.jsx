@@ -95,7 +95,7 @@ const ProductPage = (props) => {
               </CardProducts>
             ))}
         </div>
-        <div className="basis-1/2">
+        <div className="basis-1/2 fixed right-0 bottom-0 bg-gray-100 rounded-xl p-4">
           <div className="title-cart mt-5 font-semibold text-3xl text-blue-500">
             Cart
           </div>
