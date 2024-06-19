@@ -7,13 +7,11 @@ import { getProducts } from "../services/product.service";
 import Dollar from "../components/Elements/Formats/Dollar";
 import { getUsername } from "../services/auth.service";
 import { useLogin } from "../hooks/useLogin";
+import { Link } from "react-router-dom";
+import Header from "../components/Fragments/Header";
+import { getId } from "../hooks/useLogin";
 
 // const email = localStorage.getItem("email");
-
-const handleLogout = () => {
-  localStorage.removeItem("token");
-  window.location.href = "/";
-};
 
 const ProductPage = (props) => {
   const [carts, setCarts] = useState([
@@ -23,25 +21,24 @@ const ProductPage = (props) => {
     // },
   ]);
 
-  const handleRemoveFromCart = (id) => {
-    setCarts(carts.filter((cart) => cart.id !== id));
+  const handleRemoveCart = () => {
+    localStorage.removeItem("carts");
+    alert("Successfully removed");
+    window.location.href = "/products";
   };
 
   const [totalPrice, setTotalPrice] = useState(0);
   const [products, setProducts] = useState([]);
   const username = useLogin();
+  const id = getId();
 
   useEffect(() => {
     setCarts(JSON.parse(localStorage.getItem("carts")) || []);
   }, []);
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (!token) {
-  //     window.location.href = "/";
-  //   }
-  //   setUsername(getUsername(token));
-  // }, []);
+  const handleCheckout = () => {
+    console.log("Checkout");
+  };
 
   useEffect(() => {
     if (products.length > 0 && carts.length > 0) {
@@ -80,18 +77,7 @@ const ProductPage = (props) => {
 
   return (
     <>
-      <div className="flex justify-end p-4 bg-blue-500 text-white">
-        
-        <b className="mr-4">{username}</b>
-        {/* <span className="px-4">11</span> */}
-        {/* <Counter /> */}
-        <Button
-          type="button"
-          onClick={handleLogout}
-          className="text-white"
-          name="Logout"
-        />
-      </div>
+      <Header username={username} id={id}></Header>
       <div className="flex flex-row">
         <div className="basis-1/2">
           {products.length > 0 &&
@@ -113,17 +99,6 @@ const ProductPage = (props) => {
           <div className="title-cart mt-5 font-semibold text-3xl text-blue-500">
             Cart
           </div>
-          {/* <ul className="list-none">
-            {carts.map((cart, index) => {
-              console.log(cart);
-              return (
-                <>
-                  <li>Id: {cart.id}</li>
-                  <li>Qty: {cart.qty}</li>
-                </>
-              );
-            })}
-          </ul> */}
           <table className="table-auto text-left border-separate">
             <thead>
               <tr>
@@ -144,28 +119,47 @@ const ProductPage = (props) => {
                       <tr>
                         <td>{product.title.substring(0, 20)}</td>
                         <td>
-                          {/* <Rupiah number={product.price} /> */}
                           <Dollar number={product.price} />
                         </td>
                         <td>{cart.qty}</td>
                         <td>
-                          {/* <Rupiah number={cart.qty * product.price}></Rupiah> */}
-                          <Dollar number={product.price} />
+                          <Dollar number={product.price * cart.qty} />
                         </td>
                       </tr>
                     </>
                   );
                 })}
-
               <tr>
                 <td colSpan={3}>
                   <b>Total Price</b>
                 </td>
                 <td>
                   <b>
-                    {/* <Rupiah number={totalPrice}></Rupiah> */}
                     <Dollar number={totalPrice} />
                   </b>
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="2"></td>
+                <td>
+                  {carts.length > 0 && (
+                    <Button
+                      type="button"
+                      onClick={handleRemoveCart}
+                      className="px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-400 transition duration-300"
+                      name="Remove"
+                    ></Button>
+                  )}
+                </td>
+                <td>
+                  {carts.length > 0 && (
+                    <Button
+                      type="button"
+                      onClick={handleCheckout}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-400 transition duration-300"
+                      name="Checkout"
+                    ></Button>
+                  )}
                 </td>
               </tr>
             </tbody>

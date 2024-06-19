@@ -7,31 +7,30 @@ const FormRegister = () => {
   const [registerFailed, setRegisterFailed] = useState("");
   const [inputs, setInputs] = useState("");
   const handleChange = (event) => {
-	event.preventDefault();
+    event.preventDefault();
     const name = event.target.name;
     const value = event.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
-  }
+  };
   const handleRegister = (event) => {
-	event.preventDefault();
-	const data = {
-		email: inputs.email,
-        username: inputs.username,
-        firstName: inputs.firstName,
-        lastName: inputs.lastName,
-        password:  inputs.password,
-        confirmPassword: inputs.confirmPassword,
-	}
+    event.preventDefault();
+    const data = {
+      email: inputs.email,
+      username: inputs.username,
+      firstName: inputs.firstName,
+      lastName: inputs.lastName,
+      password: inputs.password,
+      confirmPassword: inputs.confirmPassword,
+    };
 
-	registerUser(data, (status, res) => {
-		if (status) {
-            alert("Successfully registered");
-            window.location.href = "/";
-        } else {
-            setRegisterFailed(res.response.data);
-        }
-	});
-
+    registerUser(data, (status, res) => {
+      if (status) {
+        alert("Successfully registered");
+        window.location.href = "/";
+      } else {
+        setRegisterFailed(res.response.data);
+      }
+    });
   };
 
   return (
@@ -45,7 +44,7 @@ const FormRegister = () => {
           value={inputs.email}
           className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:border-blue-400"
           placeholder="example@gmail.com"
-		  onChange={handleChange}
+          onChange={handleChange}
         >
           Email
         </InputForm>
@@ -54,10 +53,10 @@ const FormRegister = () => {
           name="username"
           id="username"
           type="text"
-		  value={inputs.username}
+          value={inputs.username}
           className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:border-blue-400"
           placeholder="michaelj"
-		  onChange={handleChange}
+          onChange={handleChange}
         >
           Username
         </InputForm>
@@ -66,10 +65,10 @@ const FormRegister = () => {
           name="firstName"
           id="firstName"
           type="text"
-		  value={inputs.firstName}
+          value={inputs.firstName}
           className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:border-blue-400"
           placeholder="john"
-		  onChange={handleChange}
+          onChange={handleChange}
         >
           First Name
         </InputForm>
@@ -78,10 +77,10 @@ const FormRegister = () => {
           name="lastName"
           id="lastName"
           type="text"
-		  value={inputs.lastName}
+          value={inputs.lastName}
           className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:border-blue-400"
           placeholder="Dhoe"
-		  onChange={handleChange}
+          onChange={handleChange}
         >
           Last Name
         </InputForm>
@@ -90,10 +89,10 @@ const FormRegister = () => {
           name="password"
           id="password"
           type="password"
-		  value={inputs.password}
+          value={inputs.password}
           className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:border-blue-400"
           placeholder="**********"
-		  onChange={handleChange}
+          onChange={handleChange}
         >
           Password
         </InputForm>
@@ -102,10 +101,10 @@ const FormRegister = () => {
           name="confirmPassword"
           id="confirmPassword"
           type="password"
-		  value={inputs.confirmPassword}
+          value={inputs.confirmPassword}
           className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:border-blue-400"
           placeholder="**********"
-		  onChange={handleChange}
+          onChange={handleChange}
         >
           Confirm Password
         </InputForm>

@@ -2,18 +2,21 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getDetailProduct } from "../services/product.service";
 import Dollar from "../components/Elements/Formats/Dollar";
+import Header from "../components/Fragments/Header";
+import { useLogin } from "../hooks/useLogin";
 
 const DetailProductPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState({});
+  const username = useLogin();
   useEffect(() => {
     getDetailProduct(id, (data) => {
       setProduct(data);
     });
   }, [id]);
-  console.log(product);
   return (
     <>
+      <Header username={username} id={id}></Header>
       <div className="container mx-auto p-6">
         <div className="bg-white p-6 rounded-lg shadow-lg">
           {Object.keys(product).length > 0 && (

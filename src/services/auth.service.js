@@ -13,7 +13,25 @@ export const login = (data, callback) => {
 };
 
 export const getUsername = (token) => {
-    const decoded = jwtDecode(token);
+  const decoded = jwtDecode(token);
 
-    return decoded.user;
-}
+  return decoded.user;
+};
+
+export const getUserId = (token) => {
+  const decoded = jwtDecode(token);
+
+  return decoded.sub;
+};
+
+export const profileId = (id, callback) => {
+  axios
+    .get(`https://fakestoreapi.com/users/${id}`)
+    .then((response) => {
+      // console.log(response.data);
+      callback(response.data);  
+    })
+    .catch((error) => {
+      callback(error);
+    });
+};
