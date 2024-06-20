@@ -79,7 +79,7 @@ const ProductPage = (props) => {
     <>
       <Header username={username} id={id}></Header>
       <div className="flex flex-row">
-        <div className="basis-1/2">
+        <div className="basis-3/4">
           {products.length > 0 &&
             products.map((product) => (
               <CardProducts key={product.id}>
@@ -95,7 +95,7 @@ const ProductPage = (props) => {
               </CardProducts>
             ))}
         </div>
-        <div className="basis-1/2 fixed right-0 bottom-0 bg-gray-100 rounded-xl p-4">
+        <div className="basis-1/4 fixed right-0 bottom-0 bg-gray-100 rounded-xl p-4">
           <div className="title-cart mt-5 font-semibold text-3xl text-blue-500">
             Cart
           </div>

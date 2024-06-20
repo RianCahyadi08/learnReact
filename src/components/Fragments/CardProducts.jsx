@@ -17,7 +17,7 @@ const handleAddToCart = () => {
 const CardProducts = (props) => {
   return (
     <>
-      <div className="container mx-auto p-6 max-w-2xl bg-white shadow-lg rounded-lg mt-5 mb-15">
+      <div className="container p-6 max-w-2xl bg-white shadow-lg rounded-lg mt-5 mb-15 float-start mr-4 h-[38rem]">
         <div className="flex flex-col md:flex-row">{props.children}</div>
       </div>
     </>
@@ -31,7 +31,7 @@ const HeaderImage = (props, id) => {
         <img
           src={props.imageProduct}
           alt={props.imageProduct}
-          className="rounded-lg shadow-md"
+          className="rounded-lg shadow-md m-4"
         />
       </div>
     </>
