@@ -10,6 +10,7 @@ import { useLogin } from "../hooks/useLogin";
 import { Link } from "react-router-dom";
 import Header from "../components/Fragments/Header";
 import { getId } from "../hooks/useLogin";
+import Cart from "../components/Fragments/Cart";
 
 // const email = localStorage.getItem("email");
 
@@ -77,6 +78,7 @@ const ProductPage = (props) => {
 
   return (
     <>
+      {console.log(products)}
       <Header username={username} id={id}></Header>
       <div className="flex flex-row">
         <div className="basis-3/4">
@@ -95,76 +97,13 @@ const ProductPage = (props) => {
               </CardProducts>
             ))}
         </div>
-        <div className="basis-1/4 fixed right-0 bottom-0 bg-gray-100 rounded-xl p-4">
-          <div className="title-cart mt-5 font-semibold text-3xl text-blue-500">
-            Cart
-          </div>
-          <table className="table-auto text-left border-separate">
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Price</th>
-                <th>Qty</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              {products.length > 0 &&
-                carts.map((cart, index) => {
-                  const product = products.find(
-                    (product) => product.id === cart.id
-                  );
-                  return (
-                    <>
-                      <tr>
-                        <td>{product.title.substring(0, 20)}</td>
-                        <td>
-                          <Dollar number={product.price} />
-                        </td>
-                        <td>{cart.qty}</td>
-                        <td>
-                          <Dollar number={product.price * cart.qty} />
-                        </td>
-                      </tr>
-                    </>
-                  );
-                })}
-              <tr>
-                <td colSpan={3}>
-                  <b>Total Price</b>
-                </td>
-                <td>
-                  <b>
-                    <Dollar number={totalPrice} />
-                  </b>
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="2"></td>
-                <td>
-                  {carts.length > 0 && (
-                    <Button
-                      type="button"
-                      onClick={handleRemoveCart}
-                      className="px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-400 transition duration-300"
-                      name="Remove"
-                    ></Button>
-                  )}
-                </td>
-                <td>
-                  {carts.length > 0 && (
-                    <Button
-                      type="button"
-                      onClick={handleCheckout}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-400 transition duration-300"
-                      name="Checkout"
-                    ></Button>
-                  )}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <Cart
+          products={products}
+          totalPrice={totalPrice}
+          carts={carts}
+          handleRemoveCart={handleRemoveCart}
+          handleCheckout={handleCheckout}
+        />
       </div>
 
       {/* <div className="flex justify-center">
